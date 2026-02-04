@@ -2,9 +2,6 @@ window.BetterPromptConfig = {
   ui: {
     title: "Better Prompt",
     subtitle: "Делаем идеальный промпт за вас",
-    heroKicker: "Лаборатория промптов",
-    heroTitle: "Better Prompt — делаем идеальный промпт за вас",
-    heroSubtitle: "Соберите сильный запрос за минуты и сохраните стиль.",
     inputTitle: "Входной промпт",
     inputMeta: "Исходный",
     inputLabel: "Вставьте текст",
@@ -16,7 +13,7 @@ window.BetterPromptConfig = {
     pasteLabel: "Вставить",
     confirmLabel: "Подтвердить",
     copyLabel: "Скопировать",
-    telegramLabel: "Telegram бот",
+    telegramLabel: "Бот в Telegram",
   },
   api: {
     endpoint: "/api/improve",

@@ -11,9 +11,6 @@ const telegramBtn = document.getElementById("telegramBtn");
 
 const uiTitle = document.getElementById("uiTitle");
 const uiSubtitle = document.getElementById("uiSubtitle");
-const uiKicker = document.getElementById("uiKicker");
-const uiHeroTitle = document.getElementById("uiHeroTitle");
-const uiHeroSubtitle = document.getElementById("uiHeroSubtitle");
 const uiInputTitle = document.getElementById("uiInputTitle");
 const uiInputMeta = document.getElementById("uiInputMeta");
 const uiInputLabel = document.getElementById("uiInputLabel");
@@ -175,9 +172,6 @@ if (toastConfig.copied) {
 
 if (uiTitle && ui.title) uiTitle.textContent = ui.title;
 if (uiSubtitle && ui.subtitle) uiSubtitle.textContent = ui.subtitle;
-if (uiKicker && ui.heroKicker) uiKicker.textContent = ui.heroKicker;
-if (uiHeroTitle && ui.heroTitle) uiHeroTitle.textContent = ui.heroTitle;
-if (uiHeroSubtitle && ui.heroSubtitle) uiHeroSubtitle.textContent = ui.heroSubtitle;
 if (uiInputTitle && ui.inputTitle) uiInputTitle.textContent = ui.inputTitle;
 if (uiInputMeta && ui.inputMeta) uiInputMeta.textContent = ui.inputMeta;
 if (uiInputLabel && ui.inputLabel) uiInputLabel.textContent = ui.inputLabel;

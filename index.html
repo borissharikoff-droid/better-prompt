@@ -39,68 +39,49 @@
         </div>
       </header>
 
-      <div class="layout">
-        <main class="main">
-          <div class="left-stack">
-            <section class="hero">
-              <p class="hero-kicker" id="uiKicker">Лаборатория промптов</p>
-              <h1 class="hero-title" id="uiHeroTitle">
-                Better Prompt — делаем идеальный промпт за вас
-              </h1>
-              <p class="hero-subtitle" id="uiHeroSubtitle">
-                Соберите сильный запрос за минуты и сохраните стиль.
-              </p>
-            </section>
-
-            <article class="card input-card">
-              <div class="card-header">
-                <div>
-                  <p class="card-label" id="uiInputTitle">Входной промпт</p>
-                  <p class="card-meta" id="uiInputMeta">Исходный</p>
-                </div>
-                <div class="status-chip is-hidden" id="statusText"></div>
-              </div>
-              <label class="field-label" for="inputPrompt" id="uiInputLabel">Вставьте текст</label>
-              <textarea
-                id="inputPrompt"
-                class="field-input"
-                placeholder="Например: придумай 10 идей для постов о стартапе в области ИИ..."
-              ></textarea>
-              <div class="panel-controls">
-                <button id="pasteBtn" class="btn ghost">Вставить</button>
-                <button id="confirmBtn" class="btn primary">Подтвердить</button>
-              </div>
-              <div class="status-row">
-                <span class="status-meta" id="memeText">Никаких лишних слов.</span>
-              </div>
-            </article>
+      <main class="main">
+        <article class="card input-card">
+          <div class="card-header">
+            <div>
+              <p class="card-label" id="uiInputTitle">Входной промпт</p>
+              <p class="card-meta" id="uiInputMeta">Исходный</p>
+            </div>
+            <div class="status-chip is-hidden" id="statusText"></div>
           </div>
-
-          <div class="right-stack">
-            <article class="card output-card">
-              <div class="card-header">
-                <div>
-                  <p class="card-label" id="uiOutputTitle">Обновлённый промпт</p>
-                  <p class="card-meta" id="uiOutputMeta">Улучшенный</p>
-                </div>
-                <button id="copyBtn" class="btn secondary">Скопировать</button>
-              </div>
-              <div class="output-hint" id="outputHint">Нажмите на текст, чтобы скопировать.</div>
-              <pre id="outputPrompt" class="output" tabindex="0" role="button">Готово принять ваш запрос.</pre>
-              <div class="toast" id="toast">Скопировано</div>
-            </article>
-
-            <footer class="footer">
-              <a id="telegramBtn" class="btn telegram" href="#" target="_blank" rel="noreferrer">
-                Telegram бот
-              </a>
-              <p class="footer-note">
-                Better Prompt — структурируем мысли, экономим время, усиливаем смысл.
-              </p>
-            </footer>
+          <label class="field-label" for="inputPrompt" id="uiInputLabel">Вставьте текст</label>
+          <textarea
+            id="inputPrompt"
+            class="field-input"
+            placeholder="Например: придумай 10 идей для постов о стартапе в области ИИ..."
+          ></textarea>
+          <div class="panel-controls">
+            <button id="pasteBtn" class="btn ghost">Вставить</button>
+            <button id="confirmBtn" class="btn primary">Подтвердить</button>
           </div>
-        </main>
-      </div>
+          <div class="status-row">
+            <span class="status-meta" id="memeText">Никаких лишних слов.</span>
+          </div>
+        </article>
+
+        <article class="card output-card">
+          <div class="card-header">
+            <div>
+              <p class="card-label" id="uiOutputTitle">Обновлённый промпт</p>
+              <p class="card-meta" id="uiOutputMeta">Улучшенный</p>
+            </div>
+            <button id="copyBtn" class="btn secondary">Скопировать</button>
+          </div>
+          <div class="output-hint" id="outputHint">Нажмите на текст, чтобы скопировать.</div>
+          <pre id="outputPrompt" class="output" tabindex="0" role="button">Готово принять ваш запрос.</pre>
+          <div class="toast" id="toast">Скопировано</div>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <a id="telegramBtn" class="btn telegram" href="#" target="_blank" rel="noreferrer">
+          Бот в Telegram
+        </a>
+      </footer>
     </div>
 
     <script src="variables.js"></script>
