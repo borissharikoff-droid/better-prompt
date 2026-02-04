@@ -10,6 +10,13 @@ window.BetterPromptConfig = {
     outputTitle: "Обновлённый промпт",
     outputMeta: "Улучшенный",
     outputHint: "Нажмите на текст, чтобы скопировать.",
+    scoreTitle: "Оценка промпта",
+    scoreLabels: {
+      efficiency: "Эффективность",
+      length: "Длина",
+      clarity: "Ясность",
+      structure: "Структура",
+    },
     pasteLabel: "Вставить",
     confirmLabel: "Подтвердить",
     copyLabel: "Скопировать",

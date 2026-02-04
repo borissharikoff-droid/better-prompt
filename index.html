@@ -73,6 +73,31 @@
           </div>
           <div class="output-hint" id="outputHint">Нажмите на текст, чтобы скопировать.</div>
           <pre id="outputPrompt" class="output" tabindex="0" role="button">Готово принять ваш запрос.</pre>
+          <div class="score-panel is-hidden" id="scorePanel">
+            <div class="score-title" id="scoreTitle">Оценка промпта</div>
+            <div class="score-grid">
+              <div class="score-item" data-key="efficiency">
+                <div class="score-label">Эффективность</div>
+                <div class="score-bar"><span class="score-fill" style="width: 0%"></span></div>
+                <div class="score-value">—</div>
+              </div>
+              <div class="score-item" data-key="length">
+                <div class="score-label">Длина</div>
+                <div class="score-bar"><span class="score-fill" style="width: 0%"></span></div>
+                <div class="score-value">—</div>
+              </div>
+              <div class="score-item" data-key="clarity">
+                <div class="score-label">Ясность</div>
+                <div class="score-bar"><span class="score-fill" style="width: 0%"></span></div>
+                <div class="score-value">—</div>
+              </div>
+              <div class="score-item" data-key="structure">
+                <div class="score-label">Структура</div>
+                <div class="score-bar"><span class="score-fill" style="width: 0%"></span></div>
+                <div class="score-value">—</div>
+              </div>
+            </div>
+          </div>
           <div class="toast" id="toast">Скопировано</div>
         </article>
       </main>

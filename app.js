@@ -8,6 +8,9 @@ const memeText = document.getElementById("memeText");
 const toast = document.getElementById("toast");
 const outputHint = document.getElementById("outputHint");
 const telegramBtn = document.getElementById("telegramBtn");
+const scorePanel = document.getElementById("scorePanel");
+const scoreTitle = document.getElementById("scoreTitle");
+const scoreItems = Array.from(document.querySelectorAll(".score-item"));
 
 const uiTitle = document.getElementById("uiTitle");
 const uiSubtitle = document.getElementById("uiSubtitle");
@@ -29,6 +32,65 @@ const apiConfig = config.api || {};
 let dotTimer = null;
 let stageTimer = null;
 let memeTimer = null;
+
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+function computeScores(text) {
+  const trimmed = String(text || "").trim();
+  if (!trimmed) {
+    return { efficiency: 0, length: 0, clarity: 0, structure: 0 };
+  }
+
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  const wordCount = words.length;
+  const sentences = trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+  const sentenceCount = Math.max(sentences.length, 1);
+  const avgSentenceLength = wordCount / sentenceCount;
+
+  const lengthScore = clamp(100 - Math.abs(wordCount - 180) * 0.35, 45, 95);
+  const clarityScore = clamp(100 - Math.abs(avgSentenceLength - 18) * 3, 50, 96);
+
+  let structureScore = 40;
+  if (trimmed.includes("\n")) structureScore += 15;
+  if (/^\s*(\d+\.|-|•)/m.test(trimmed)) structureScore += 30;
+  if (/^\s*[А-ЯA-Z].+:\s*$/m.test(trimmed)) structureScore += 10;
+  if (trimmed.split("\n\n").length >= 2) structureScore += 10;
+  structureScore = clamp(structureScore, 45, 98);
+
+  let efficiencyScore = (lengthScore + clarityScore + structureScore) / 3;
+  if (/(сделай|сформируй|дай|создай|опиши|предложи|формат|вывод)/i.test(trimmed)) {
+    efficiencyScore += 6;
+  }
+  efficiencyScore = clamp(efficiencyScore, 50, 98);
+
+  return {
+    efficiency: Math.round(efficiencyScore),
+    length: Math.round(lengthScore),
+    clarity: Math.round(clarityScore),
+    structure: Math.round(structureScore),
+  };
+}
+
+function applyScores(scores) {
+  if (!scorePanel) return;
+  scorePanel.classList.remove("is-hidden");
+
+  scoreItems.forEach((item) => {
+    const key = item.dataset.key;
+    const value = scores[key];
+    const labelEl = item.querySelector(".score-label");
+    const valueEl = item.querySelector(".score-value");
+    const fillEl = item.querySelector(".score-fill");
+
+    if (labelEl && ui.scoreLabels && ui.scoreLabels[key]) {
+      labelEl.textContent = ui.scoreLabels[key];
+    }
+
+    const displayValue = Number.isFinite(value) ? Math.round(value) : 0;
+    if (valueEl) valueEl.textContent = `${displayValue}%`;
+    if (fillEl) fillEl.style.width = `${displayValue}%`;
+  });
+}
 
 
 function setStatusIdle(message) {
@@ -90,7 +152,10 @@ async function requestImprovedPrompt(raw) {
     throw new Error(payload.error || "Request failed");
   }
 
-  return (payload.output || "").trim();
+  return {
+    output: (payload.output || "").trim(),
+    scores: payload.scores || null,
+  };
 }
 
 async function handlePaste() {
@@ -151,11 +216,20 @@ async function handleConfirm() {
   startLoading();
 
   try {
-    const improved = await requestImprovedPrompt(raw);
+    const result = await requestImprovedPrompt(raw);
+    const improved = result.output;
     outputPrompt.textContent = improved || idle.errorOutput || "";
-    setStatusIdle(improved ? idle.done : idle.error);
+    if (improved) {
+      const scores = result.scores || computeScores(improved);
+      applyScores(scores);
+      setStatusIdle(idle.done);
+    } else {
+      if (scorePanel) scorePanel.classList.add("is-hidden");
+      setStatusIdle(idle.error);
+    }
   } catch (error) {
     outputPrompt.textContent = idle.errorOutput || "";
+    if (scorePanel) scorePanel.classList.add("is-hidden");
     setStatusIdle(idle.error);
   } finally {
     stopLoading();
@@ -178,6 +252,7 @@ if (uiInputLabel && ui.inputLabel) uiInputLabel.textContent = ui.inputLabel;
 if (uiOutputTitle && ui.outputTitle) uiOutputTitle.textContent = ui.outputTitle;
 if (uiOutputMeta && ui.outputMeta) uiOutputMeta.textContent = ui.outputMeta;
 if (outputHint && ui.outputHint) outputHint.textContent = ui.outputHint;
+if (scoreTitle && ui.scoreTitle) scoreTitle.textContent = ui.scoreTitle;
 if (pasteBtn && ui.pasteLabel) pasteBtn.textContent = ui.pasteLabel;
 if (confirmBtn && ui.confirmLabel) confirmBtn.textContent = ui.confirmLabel;
 if (copyBtn && ui.copyLabel) copyBtn.textContent = ui.copyLabel;

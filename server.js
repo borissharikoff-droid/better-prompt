@@ -20,6 +20,44 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+function computeScores(text) {
+  const trimmed = String(text || "").trim();
+  if (!trimmed) {
+    return { efficiency: 0, length: 0, clarity: 0, structure: 0 };
+  }
+
+  const words = trimmed.split(/\s+/).filter(Boolean);
+  const wordCount = words.length;
+  const sentences = trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+  const sentenceCount = Math.max(sentences.length, 1);
+  const avgSentenceLength = wordCount / sentenceCount;
+
+  const lengthScore = clamp(100 - Math.abs(wordCount - 180) * 0.35, 45, 95);
+  const clarityScore = clamp(100 - Math.abs(avgSentenceLength - 18) * 3, 50, 96);
+
+  let structureScore = 40;
+  if (trimmed.includes("\n")) structureScore += 15;
+  if (/^\s*(\d+\.|-|•)/m.test(trimmed)) structureScore += 30;
+  if (/^\s*[А-ЯA-Z].+:\s*$/m.test(trimmed)) structureScore += 10;
+  if (trimmed.split("\n\n").length >= 2) structureScore += 10;
+  structureScore = clamp(structureScore, 45, 98);
+
+  let efficiencyScore = (lengthScore + clarityScore + structureScore) / 3;
+  if (/(сделай|сформируй|дай|создай|опиши|предложи|формат|вывод)/i.test(trimmed)) {
+    efficiencyScore += 6;
+  }
+  efficiencyScore = clamp(efficiencyScore, 50, 98);
+
+  return {
+    efficiency: Math.round(efficiencyScore),
+    length: Math.round(lengthScore),
+    clarity: Math.round(clarityScore),
+    structure: Math.round(structureScore),
+  };
+}
+
 async function callDeepSeek(prompt) {
   if (!API_KEY) {
     throw new Error("DEEPSEEK_API_KEY not set");
@@ -72,7 +110,8 @@ app.post("/api/improve", async (req, res) => {
 
   try {
     const output = await callDeepSeek(prompt);
-    return res.json({ output });
+    const scores = computeScores(output);
+    return res.json({ output, scores });
   } catch (error) {
     console.error("Improve error:", error.message);
     return res.status(500).json({ error: error.message || "Request failed" });
@@ -122,6 +161,14 @@ if (BOT_TOKEN && BOT_ENABLED) {
       await ctx.telegram.deleteMessage(ctx.chat.id, status.message_id).catch(() => {});
       const escaped = escapeHtml(improved || "Пустой результат.");
       await ctx.reply(`<pre>${escaped}</pre>`, { parse_mode: "HTML" });
+      const scores = computeScores(improved);
+      const scoreLine =
+        `Оценка промпта:\\n` +
+        `Эффективность: ${scores.efficiency}%\\n` +
+        `Длина: ${scores.length}%\\n` +
+        `Ясность: ${scores.clarity}%\\n` +
+        `Структура: ${scores.structure}%`;
+      await ctx.reply(scoreLine);
     } catch (error) {
       clearInterval(interval);
       await ctx.telegram

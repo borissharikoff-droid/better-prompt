@@ -227,6 +227,65 @@ body {
   box-shadow: 0 0 20px rgba(244, 205, 90, 0.25);
 }
 
+.score-panel {
+  margin-top: 8px;
+  background: rgba(14, 18, 26, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(120, 200, 255, 0.18);
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.score-panel.is-hidden {
+  display: none;
+}
+
+.score-title {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.score-item {
+  display: grid;
+  gap: 6px;
+}
+
+.score-label {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.score-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(120, 200, 255, 0.12);
+  overflow: hidden;
+}
+
+.score-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(120, 200, 255, 0.9), rgba(244, 205, 90, 0.8));
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.score-value {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
 .toast {
   align-self: flex-end;
   background: rgba(244, 205, 90, 0.16);
