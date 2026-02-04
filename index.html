@@ -34,45 +34,23 @@
           </svg>
           <div class="logo-text">
             <span class="logo-title" id="uiTitle">Better Prompt</span>
-            <span class="logo-subtitle" id="uiSubtitle">Prompt workspace</span>
+            <span class="logo-subtitle" id="uiSubtitle">Делаем идеальный промпт за вас</span>
           </div>
         </div>
         <div class="top-actions">
-          <button class="ghost-pill" type="button">Help</button>
-          <button class="icon-pill" type="button" aria-label="Account">
+          <button class="icon-pill" type="button" aria-label="Аккаунт">
             <span></span>
           </button>
         </div>
       </header>
 
       <div class="layout">
-        <aside class="sidebar">
-          <div class="side-card">
-            <div class="side-header">
-              <h3 class="side-title" id="uiProjects">Projects</h3>
-              <button class="side-arrow" type="button" aria-label="Open projects">›</button>
-            </div>
-            <div class="side-item active">
-              <span class="side-avatar"></span>
-              <span id="uiProjectName">Your first project</span>
-            </div>
-            <button class="side-add" type="button">+ Create new project</button>
-          </div>
-          <div class="side-card">
-            <div class="side-header">
-              <h3 class="side-title" id="uiCollections">Collections</h3>
-              <button class="side-arrow" type="button" aria-label="Open collections">›</button>
-            </div>
-            <button class="side-add" type="button">+ Create new collection</button>
-          </div>
-        </aside>
-
         <main class="main">
           <section class="hero">
-            <p class="hero-kicker" id="uiKicker">Prompt lab</p>
-            <h1 class="hero-title" id="uiHeroTitle">Create something special today</h1>
+            <p class="hero-kicker" id="uiKicker">Лаборатория промптов</p>
+            <h1 class="hero-title" id="uiHeroTitle">Better Prompt</h1>
             <p class="hero-subtitle" id="uiHeroSubtitle">
-              Собери сильный запрос за минуты и сохрани стиль.
+              Делаем идеальный промпт за вас.
             </p>
           </section>
 
@@ -83,7 +61,7 @@
                   <p class="card-label" id="uiInputTitle">Входной промпт</p>
                   <p class="card-meta" id="uiInputMeta">RAW</p>
                 </div>
-                <div class="status-chip" id="statusText">Готов. Ждём промпт.</div>
+                <div class="status-chip is-hidden" id="statusText"></div>
               </div>
               <label class="field-label" for="inputPrompt" id="uiInputLabel">Вставьте текст</label>
               <textarea
@@ -92,7 +70,7 @@
                 placeholder="Например: придумай 10 идей для постов о стартапе в области ИИ..."
               ></textarea>
               <div class="panel-controls">
-                <button id="pasteBtn" class="btn ghost">Paste</button>
+                <button id="pasteBtn" class="btn ghost">Вставить</button>
                 <button id="confirmBtn" class="btn primary">Подтвердить</button>
               </div>
               <div class="status-row">
@@ -106,7 +84,7 @@
                   <p class="card-label" id="uiOutputTitle">Обновлённый промпт</p>
                   <p class="card-meta" id="uiOutputMeta">V2</p>
                 </div>
-                <button id="copyBtn" class="btn secondary">Copy to clipboard</button>
+                <button id="copyBtn" class="btn secondary">Скопировать</button>
               </div>
               <div class="output-hint" id="outputHint">Нажмите на текст, чтобы скопировать.</div>
               <pre id="outputPrompt" class="output" tabindex="0" role="button">Готово принять ваш запрос.</pre>
@@ -116,7 +94,7 @@
 
           <footer class="footer">
             <a id="telegramBtn" class="btn telegram" href="#" target="_blank" rel="noreferrer">
-              Telegram bot
+              Telegram бот
             </a>
             <p class="footer-note">
               Better Prompt — структурируем мысли, экономим время, усиливаем смысл.

@@ -14,9 +14,6 @@ const uiSubtitle = document.getElementById("uiSubtitle");
 const uiKicker = document.getElementById("uiKicker");
 const uiHeroTitle = document.getElementById("uiHeroTitle");
 const uiHeroSubtitle = document.getElementById("uiHeroSubtitle");
-const uiProjects = document.getElementById("uiProjects");
-const uiCollections = document.getElementById("uiCollections");
-const uiProjectName = document.getElementById("uiProjectName");
 const uiInputTitle = document.getElementById("uiInputTitle");
 const uiInputMeta = document.getElementById("uiInputMeta");
 const uiInputLabel = document.getElementById("uiInputLabel");
@@ -39,7 +36,9 @@ let memeTimer = null;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function setStatusIdle(message) {
-  statusText.textContent = message || idle.defaultStatus || "";
+  const text = message || idle.defaultStatus || "";
+  statusText.textContent = text;
+  statusText.classList.toggle("is-hidden", !text);
   memeText.textContent = idle.defaultMeme || "";
 }
 
@@ -48,6 +47,7 @@ function startLoading() {
   let stageIndex = 0;
 
   statusText.textContent = `${statusStages[stageIndex]}.`;
+  statusText.classList.remove("is-hidden");
   memeText.textContent = memeLines[0] || "";
 
   dotTimer = setInterval(() => {
@@ -169,9 +169,6 @@ if (uiSubtitle && ui.subtitle) uiSubtitle.textContent = ui.subtitle;
 if (uiKicker && ui.heroKicker) uiKicker.textContent = ui.heroKicker;
 if (uiHeroTitle && ui.heroTitle) uiHeroTitle.textContent = ui.heroTitle;
 if (uiHeroSubtitle && ui.heroSubtitle) uiHeroSubtitle.textContent = ui.heroSubtitle;
-if (uiProjects && ui.projectsTitle) uiProjects.textContent = ui.projectsTitle;
-if (uiCollections && ui.collectionsTitle) uiCollections.textContent = ui.collectionsTitle;
-if (uiProjectName && ui.projectName) uiProjectName.textContent = ui.projectName;
 if (uiInputTitle && ui.inputTitle) uiInputTitle.textContent = ui.inputTitle;
 if (uiInputMeta && ui.inputMeta) uiInputMeta.textContent = ui.inputMeta;
 if (uiInputLabel && ui.inputLabel) uiInputLabel.textContent = ui.inputLabel;
