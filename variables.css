@@ -1,14 +1,13 @@
 :root {
-  --bg: #0b0d10;
-  --panel: rgba(14, 18, 22, 0.92);
-  --panel-border: rgba(120, 220, 255, 0.25);
-  --neon: #70f6ff;
-  --magenta: #ff5bf1;
-  --amber: #ffcb6b;
-  --text: #e5f2ff;
-  --muted: rgba(229, 242, 255, 0.7);
-  --shadow: rgba(8, 12, 20, 0.6);
-  --radius: 20px;
-  --mono: "JetBrains Mono", "Courier New", monospace;
-  --display: "Chakra Petch", "Trebuchet MS", sans-serif;
+  --bg: #0f1116;
+  --panel: rgba(20, 22, 30, 0.92);
+  --panel-soft: rgba(22, 26, 36, 0.9);
+  --border: rgba(120, 200, 255, 0.2);
+  --accent: #78c8ff;
+  --accent-warm: #f4cd5a;
+  --text: #f2f4f8;
+  --muted: rgba(242, 244, 248, 0.65);
+  --shadow: 0 18px 50px rgba(7, 9, 14, 0.6);
+  --mono: "IBM Plex Mono", "Courier New", monospace;
+  --display: "Space Grotesk", "Trebuchet MS", sans-serif;
 }

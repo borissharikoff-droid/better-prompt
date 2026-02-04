@@ -6,6 +6,22 @@ const copyBtn = document.getElementById("copyBtn");
 const statusText = document.getElementById("statusText");
 const memeText = document.getElementById("memeText");
 const toast = document.getElementById("toast");
+const outputHint = document.getElementById("outputHint");
+const telegramBtn = document.getElementById("telegramBtn");
+
+const uiTitle = document.getElementById("uiTitle");
+const uiSubtitle = document.getElementById("uiSubtitle");
+const uiKicker = document.getElementById("uiKicker");
+const uiHeroTitle = document.getElementById("uiHeroTitle");
+const uiHeroSubtitle = document.getElementById("uiHeroSubtitle");
+const uiProjects = document.getElementById("uiProjects");
+const uiCollections = document.getElementById("uiCollections");
+const uiProjectName = document.getElementById("uiProjectName");
+const uiInputTitle = document.getElementById("uiInputTitle");
+const uiInputMeta = document.getElementById("uiInputMeta");
+const uiInputLabel = document.getElementById("uiInputLabel");
+const uiOutputTitle = document.getElementById("uiOutputTitle");
+const uiOutputMeta = document.getElementById("uiOutputMeta");
 
 const config = window.BetterPromptConfig || {};
 const statusStages = config.statusStages || [];
@@ -14,6 +30,7 @@ const idle = config.idle || {};
 const loading = config.loading || {};
 const outputConfig = config.output || {};
 const toastConfig = config.toast || {};
+const ui = config.ui || {};
 
 let dotTimer = null;
 let stageTimer = null;
@@ -146,6 +163,27 @@ async function handleConfirm() {
 if (toastConfig.copied) {
   toast.textContent = toastConfig.copied;
 }
+
+if (uiTitle && ui.title) uiTitle.textContent = ui.title;
+if (uiSubtitle && ui.subtitle) uiSubtitle.textContent = ui.subtitle;
+if (uiKicker && ui.heroKicker) uiKicker.textContent = ui.heroKicker;
+if (uiHeroTitle && ui.heroTitle) uiHeroTitle.textContent = ui.heroTitle;
+if (uiHeroSubtitle && ui.heroSubtitle) uiHeroSubtitle.textContent = ui.heroSubtitle;
+if (uiProjects && ui.projectsTitle) uiProjects.textContent = ui.projectsTitle;
+if (uiCollections && ui.collectionsTitle) uiCollections.textContent = ui.collectionsTitle;
+if (uiProjectName && ui.projectName) uiProjectName.textContent = ui.projectName;
+if (uiInputTitle && ui.inputTitle) uiInputTitle.textContent = ui.inputTitle;
+if (uiInputMeta && ui.inputMeta) uiInputMeta.textContent = ui.inputMeta;
+if (uiInputLabel && ui.inputLabel) uiInputLabel.textContent = ui.inputLabel;
+if (uiOutputTitle && ui.outputTitle) uiOutputTitle.textContent = ui.outputTitle;
+if (uiOutputMeta && ui.outputMeta) uiOutputMeta.textContent = ui.outputMeta;
+if (outputHint && ui.outputHint) outputHint.textContent = ui.outputHint;
+if (pasteBtn && ui.pasteLabel) pasteBtn.textContent = ui.pasteLabel;
+if (confirmBtn && ui.confirmLabel) confirmBtn.textContent = ui.confirmLabel;
+if (copyBtn && ui.copyLabel) copyBtn.textContent = ui.copyLabel;
+if (telegramBtn && ui.telegramLabel) telegramBtn.textContent = ui.telegramLabel;
+if (telegramBtn && config.telegramUrl) telegramBtn.href = config.telegramUrl;
+if (inputPrompt && ui.inputPlaceholder) inputPrompt.placeholder = ui.inputPlaceholder;
 
 setStatusIdle(idle.defaultStatus);
 

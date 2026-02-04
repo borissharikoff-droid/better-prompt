@@ -1,4 +1,27 @@
 window.BetterPromptConfig = {
+  ui: {
+    title: "Better Prompt",
+    subtitle: "Prompt workspace",
+    heroKicker: "Prompt lab",
+    heroTitle: "Create something special today",
+    heroSubtitle: "Собери сильный запрос за минуты и сохрани стиль.",
+    projectsTitle: "Projects",
+    collectionsTitle: "Collections",
+    projectName: "Your first project",
+    inputTitle: "Входной промпт",
+    inputMeta: "RAW",
+    inputLabel: "Вставьте текст",
+    inputPlaceholder:
+      "Например: придумай 10 идей для постов о стартапе в области ИИ...",
+    outputTitle: "Обновлённый промпт",
+    outputMeta: "V2",
+    outputHint: "Нажмите на текст, чтобы скопировать.",
+    pasteLabel: "Paste",
+    confirmLabel: "Подтвердить",
+    copyLabel: "Copy to clipboard",
+    telegramLabel: "Telegram bot",
+  },
+  telegramUrl: "https://t.me/your_bot",
   statusStages: ["Собираем", "Смотрим", "Ищем", "Обрабатываем", "Склеиваем"],
   memeLines: [
     "Проверяем смысловые узлы.",
@@ -23,7 +46,6 @@ window.BetterPromptConfig = {
     totalDelayMs: 3200,
   },
   output: {
-    hint: "Нажмите на текст, чтобы скопировать.",
     templateLines: [
       "ROLE:",
       "Ты — экспертный ассистент, который превращает запросы в точные решения.",
