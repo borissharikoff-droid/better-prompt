@@ -1,0 +1,14 @@
+:root {
+  --bg: #0b0d10;
+  --panel: rgba(14, 18, 22, 0.92);
+  --panel-border: rgba(120, 220, 255, 0.25);
+  --neon: #70f6ff;
+  --magenta: #ff5bf1;
+  --amber: #ffcb6b;
+  --text: #e5f2ff;
+  --muted: rgba(229, 242, 255, 0.7);
+  --shadow: rgba(8, 12, 20, 0.6);
+  --radius: 20px;
+  --mono: "JetBrains Mono", "Courier New", monospace;
+  --display: "Chakra Petch", "Trebuchet MS", sans-serif;
+}

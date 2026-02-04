@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Better Prompt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="variables.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-noise" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="brand">
+        <p class="brand-kicker">PROMPT FORGE</p>
+        <h1 class="brand-title">Better Prompt</h1>
+        <p class="brand-subtitle">ASCII / cyber лаборатория для точных формулировок</p>
+      </div>
+      <pre class="brand-ascii" aria-hidden="true">
+ ____        _   _               ____                             _   
+| __ )  __ _| |_| |__   ___ _ __|  _ \ _ __ ___  _ __ ___  _ __ | |_ 
+|  _ \ / _` | __| '_ \ / _ \ '__| |_) | '__/ _ \| '_ ` _ \| '_ \| __|
+| |_) | (_| | |_| | | |  __/ |  |  __/| | | (_) | | | | | | |_) | |_ 
+|____/ \__,_|\__|_| |_|\___|_|  |_|   |_|  \___/|_| |_| |_| .__/ \__|
+                                                         |_|         
+      </pre>
+    </header>
+
+    <main class="workspace">
+      <section class="panel input-panel">
+        <div class="panel-header">
+          <span class="panel-title">Входной промпт</span>
+          <span class="panel-chip">RAW</span>
+        </div>
+        <label class="field-label" for="inputPrompt">Вставьте текст</label>
+        <textarea
+          id="inputPrompt"
+          class="field-input"
+          placeholder="Например: придумай 10 идей для постов о стартапе в области ИИ..."
+        ></textarea>
+        <div class="panel-controls">
+          <button id="pasteBtn" class="btn ghost">Paste</button>
+          <button id="confirmBtn" class="btn primary">Подтвердить</button>
+        </div>
+        <div class="status-box" aria-live="polite">
+          <div class="status-title">Статус</div>
+          <div class="status-text" id="statusText">Готов. Ждём промпт.</div>
+          <div class="status-meta" id="memeText">Никаких лишних слов.</div>
+        </div>
+      </section>
+
+      <section class="panel output-panel">
+        <div class="panel-header">
+          <span class="panel-title">Обновлённый промпт</span>
+          <span class="panel-chip">V2</span>
+        </div>
+        <div class="output-hint">Нажмите на текст, чтобы скопировать.</div>
+        <pre id="outputPrompt" class="output" tabindex="0" role="button">Готово принять ваш запрос.</pre>
+        <button id="copyBtn" class="btn secondary">Copy to clipboard</button>
+        <div class="toast" id="toast">Скопировано</div>
+      </section>
+    </main>
+
+    <section class="bot-section" id="telegram">
+      <div class="bot-card">
+        <div>
+          <h2 class="bot-title">Telegram Bot</h2>
+          <p class="bot-subtitle">Лаконичный поток без лишней болтовни.</p>
+        </div>
+        <div class="bot-flow">
+          <div class="bot-line">/start → приветствие + картинка бренда</div>
+          <div class="bot-line">Пользователь отправляет промпт</div>
+          <div class="bot-line">Бот отвечает: «обрабатываем.» → «обрабатываем..» → «обрабатываем...»</div>
+          <div class="bot-line">Готовый промпт приходит в моноширинном блоке</div>
+          <div class="bot-line">Клик по промпту = копирование</div>
+        </div>
+      </div>
+      <a class="btn telegram" href="#" aria-label="Telegram Bot">
+        Telegram Bot
+      </a>
+    </section>
+
+    <footer class="site-footer">
+      <p>Better Prompt — структурируем мысли, экономим время, усиливаем смысл.</p>
+    </footer>
+
+    <script src="variables.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
