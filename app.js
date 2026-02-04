@@ -25,15 +25,14 @@ const statusStages = config.statusStages || [];
 const memeLines = config.memeLines || [];
 const idle = config.idle || {};
 const loading = config.loading || {};
-const outputConfig = config.output || {};
 const toastConfig = config.toast || {};
 const ui = config.ui || {};
+const apiConfig = config.api || {};
 
 let dotTimer = null;
 let stageTimer = null;
 let memeTimer = null;
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function setStatusIdle(message) {
   const text = message || idle.defaultStatus || "";
@@ -75,20 +74,26 @@ function stopLoading() {
   memeTimer = null;
 }
 
-function enhancePrompt(raw) {
-  const cleaned = raw.trim().replace(/\s+/g, " ");
-  const timestamp = new Date().toLocaleString(
-    outputConfig.locale || "ru-RU",
-    outputConfig.timestampOptions || { dateStyle: "short", timeStyle: "short" }
-  );
+async function requestImprovedPrompt(raw) {
+  const endpoint = apiConfig.endpoint || "/api/improve";
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: raw }),
+  });
 
-  const lines = (outputConfig.templateLines || []).map((line) =>
-    line
-      .replace("{{input}}", `"${cleaned}"`)
-      .replace("{{timestamp}}", timestamp)
-  );
+  let payload = {};
+  try {
+    payload = await response.json();
+  } catch (error) {
+    payload = {};
+  }
 
-  return lines.join("\n");
+  if (!response.ok) {
+    throw new Error(payload.error || "Request failed");
+  }
+
+  return (payload.output || "").trim();
 }
 
 async function handlePaste() {
@@ -148,12 +153,16 @@ async function handleConfirm() {
   copyBtn.disabled = true;
   startLoading();
 
-  await sleep(loading.totalDelayMs || 3200);
-
-  stopLoading();
-  const enhanced = enhancePrompt(raw);
-  outputPrompt.textContent = enhanced;
-  setStatusIdle(idle.done);
+  try {
+    const improved = await requestImprovedPrompt(raw);
+    outputPrompt.textContent = improved || idle.errorOutput || "";
+    setStatusIdle(improved ? idle.done : idle.error);
+  } catch (error) {
+    outputPrompt.textContent = idle.errorOutput || "";
+    setStatusIdle(idle.error);
+  } finally {
+    stopLoading();
+  }
 
   confirmBtn.disabled = false;
   pasteBtn.disabled = false;
