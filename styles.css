@@ -59,8 +59,8 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
   width: 100%;
-  max-width: 1400px;
-  align-items: start;
+  max-width: none;
+  align-items: stretch;
   margin: 0 auto 24px;
 }
 
@@ -72,6 +72,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
 }
 
 .card-header {
@@ -113,7 +114,7 @@ body {
 }
 
 .field-input {
-  min-height: 210px;
+  min-height: 260px;
   resize: vertical;
   border-radius: 18px;
   border: 1px solid var(--border);
@@ -218,7 +219,7 @@ body {
 }
 
 .output-card {
-  min-height: 420px;
+  min-height: 520px;
 }
 
 .output.copied {
