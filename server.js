@@ -6,6 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.DEEPSEEK_API_KEY;
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const BOT_ENABLED = process.env.TELEGRAM_BOT_ENABLED !== "false";
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname)));
@@ -82,7 +83,7 @@ app.listen(PORT, () => {
   console.log(`Better Prompt server running on ${PORT}`);
 });
 
-if (BOT_TOKEN) {
+if (BOT_TOKEN && BOT_ENABLED) {
   const bot = new Telegraf(BOT_TOKEN);
 
   const escapeHtml = (value) =>
@@ -134,10 +135,14 @@ if (BOT_TOKEN) {
     .deleteWebhook({ drop_pending_updates: true })
     .catch(() => {})
     .finally(() => {
-      bot.launch().then(() => {
-        console.log("Telegram bot started");
-      });
+      bot.launch()
+        .then(() => {
+          console.log("Telegram bot started");
+        })
+        .catch((error) => {
+          console.error("Telegram bot failed to start:", error.message);
+        });
     });
 } else {
-  console.warn("TELEGRAM_BOT_TOKEN not set; bot disabled.");
+  console.warn("Telegram bot disabled (missing token or TELEGRAM_BOT_ENABLED=false).");
 }
