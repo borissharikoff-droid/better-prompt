@@ -10,6 +10,15 @@ const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(path.join(__dirname)));
 
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    hasDeepseekKey: Boolean(API_KEY),
+    hasTelegramToken: Boolean(BOT_TOKEN),
+    node: process.version,
+  });
+});
+
 async function callDeepSeek(prompt) {
   if (!API_KEY) {
     throw new Error("DEEPSEEK_API_KEY not set");
@@ -39,8 +48,15 @@ async function callDeepSeek(prompt) {
     }),
   });
 
-  const data = await response.json();
+  const raw = await response.text();
+  let data = {};
+  try {
+    data = JSON.parse(raw);
+  } catch (error) {
+    data = {};
+  }
   if (!response.ok) {
+    console.error("DeepSeek error", response.status, raw);
     throw new Error(data?.error?.message || "DeepSeek error");
   }
 
@@ -57,6 +73,7 @@ app.post("/api/improve", async (req, res) => {
     const output = await callDeepSeek(prompt);
     return res.json({ output });
   } catch (error) {
+    console.error("Improve error:", error.message);
     return res.status(500).json({ error: error.message || "Request failed" });
   }
 });
