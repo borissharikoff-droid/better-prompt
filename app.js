@@ -183,11 +183,17 @@ async function copyOutput() {
     return;
   }
 
+  const originalLabel = ui.copyLabel || "Скопировать";
+
   try {
     await navigator.clipboard.writeText(text);
     outputPrompt.classList.add("copied");
+    copyBtn.textContent = toastConfig.copied || "Скопировано";
     showToast();
-    setTimeout(() => outputPrompt.classList.remove("copied"), 1200);
+    setTimeout(() => {
+      outputPrompt.classList.remove("copied");
+      copyBtn.textContent = originalLabel;
+    }, 3000);
   } catch (error) {
     const selection = window.getSelection();
     const range = document.createRange();
@@ -197,8 +203,12 @@ async function copyOutput() {
     document.execCommand("copy");
     selection.removeAllRanges();
     outputPrompt.classList.add("copied");
+    copyBtn.textContent = toastConfig.copied || "Скопировано";
     showToast();
-    setTimeout(() => outputPrompt.classList.remove("copied"), 1200);
+    setTimeout(() => {
+      outputPrompt.classList.remove("copied");
+      copyBtn.textContent = originalLabel;
+    }, 3000);
   }
 }
 
@@ -266,3 +276,9 @@ pasteBtn.addEventListener("click", handlePaste);
 confirmBtn.addEventListener("click", handleConfirm);
 copyBtn.addEventListener("click", copyOutput);
 outputPrompt.addEventListener("click", copyOutput);
+inputPrompt.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    handleConfirm();
+  }
+});

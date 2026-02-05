@@ -167,9 +167,9 @@ body {
 }
 
 .btn.telegram {
-  background: rgba(120, 200, 255, 0.16);
-  border: 1px solid rgba(120, 200, 255, 0.4);
-  color: var(--accent);
+  background: rgba(38, 165, 228, 0.2);
+  border: 1px solid rgba(38, 165, 228, 0.6);
+  color: #26A5E4;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
