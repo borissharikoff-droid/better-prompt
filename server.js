@@ -1,6 +1,6 @@
 const path = require("path");
 const express = require("express");
-const { Telegraf } = require("telegraf");
+const { Telegraf, Markup } = require("telegraf");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -65,9 +65,15 @@ async function callDeepSeek(prompt) {
 
   const system =
     "Ты — эксперт по улучшению промптов. Преобразуй пользовательский запрос в чёткий, структурированный промпт. " +
-    "Сохраняй язык исходного запроса. Не добавляй объяснений и комментариев. Выводи только готовый промпт без Markdown.";
+    "Сохраняй язык исходного запроса. Не выполняй запрос и не выдавай решение задачи. " +
+    "Всегда возвращай только улучшенный промпт, даже если вход уже похож на промпт. " +
+    "Возвращай именно инструкцию для модели (повелительные формулировки, требования, правила), а не результат выполнения. " +
+    "Не добавляй объяснений, примеров, ответов или комментариев. Выводи только готовый промпт без Markdown.";
 
-  const user = `Исходный запрос:\n${prompt}`;
+  const user =
+    "Сформируй улучшенный промпт. Это должен быть текст-инструкция для модели, " +
+    "а не готовый ответ на задачу.\n\n" +
+    `Исходный запрос:\n${prompt}`;
 
   const response = await fetch("https://api.deepseek.com/chat/completions", {
     method: "POST",
@@ -133,9 +139,15 @@ if (BOT_TOKEN && BOT_ENABLED) {
 
   bot.start(async (ctx) => {
     const message =
-      "Better Prompt — делаем идеальный промпт за вас.\n" +
-      "Отправьте текст, и я верну улучшенную версию.";
-    await ctx.reply(message);
+      "Better Prompt — усиление и создание промптов.\n\n" +
+      "• Пришлите описание или готовый промпт.\n" +
+      "• Я верну улучшенную инструкцию, без решения задачи.\n" +
+      "• В конце — короткая оценка качества.\n\n" +
+      "Нажмите кнопку ниже или отправьте текст.";
+    await ctx.reply(
+      message,
+      Markup.keyboard([["Отправить промпт"]]).resize().oneTime()
+    );
   });
 
   bot.on("text", async (ctx) => {
@@ -162,13 +174,14 @@ if (BOT_TOKEN && BOT_ENABLED) {
       const escaped = escapeHtml(improved || "Пустой результат.");
       await ctx.reply(`<pre>${escaped}</pre>`, { parse_mode: "HTML" });
       const scores = computeScores(improved);
-      const scoreLine =
-        `Оценка промпта:\\n` +
-        `Эффективность: ${scores.efficiency}%\\n` +
-        `Длина: ${scores.length}%\\n` +
-        `Ясность: ${scores.clarity}%\\n` +
-        `Структура: ${scores.structure}%`;
-      await ctx.reply(scoreLine);
+      const scoreLine = [
+        "Оценка промпта:",
+        `• <b>Эффективность</b>: ${scores.efficiency}%`,
+        `• <b>Длина</b>: ${scores.length}%`,
+        `• <b>Ясность</b>: ${scores.clarity}%`,
+        `• <b>Структура</b>: ${scores.structure}%`,
+      ].join("\n");
+      await ctx.reply(scoreLine, { parse_mode: "HTML" });
     } catch (error) {
       clearInterval(interval);
       await ctx.telegram
