@@ -97,7 +97,7 @@ function setStatusIdle(message) {
   const text = message || idle.defaultStatus || "";
   statusText.textContent = text;
   statusText.classList.toggle("is-hidden", !text);
-  memeText.textContent = idle.defaultMeme || "";
+  if (memeText) memeText.textContent = idle.defaultMeme || "";
 }
 
 function startLoading() {
@@ -106,7 +106,7 @@ function startLoading() {
 
   statusText.textContent = `${statusStages[stageIndex]}.`;
   statusText.classList.remove("is-hidden");
-  memeText.textContent = memeLines[0] || "";
+  if (memeText) memeText.textContent = memeLines[0] || "";
 
   dotTimer = setInterval(() => {
     dots = dots % 3 + 1;
@@ -118,10 +118,12 @@ function startLoading() {
   }, loading.stageIntervalMs || 1400);
 
   let memeIndex = 0;
-  memeTimer = setInterval(() => {
-    memeIndex = (memeIndex + 1) % memeLines.length;
-    memeText.textContent = memeLines[memeIndex];
-  }, loading.memeIntervalMs || 1600);
+  if (memeText) {
+    memeTimer = setInterval(() => {
+      memeIndex = (memeIndex + 1) % memeLines.length;
+      memeText.textContent = memeLines[memeIndex];
+    }, loading.memeIntervalMs || 1600);
+  }
 }
 
 function stopLoading() {
@@ -216,7 +218,9 @@ async function handleConfirm() {
   const raw = inputPrompt.value.trim();
   if (!raw) {
     setStatusIdle(idle.noPrompt);
+    inputPrompt.classList.add("field-error");
     inputPrompt.focus();
+    setTimeout(() => inputPrompt.classList.remove("field-error"), 2000);
     return;
   }
 

@@ -64,16 +64,18 @@ async function callDeepSeek(prompt) {
   }
 
   const system =
-    "Ты — эксперт по улучшению промптов. Преобразуй пользовательский запрос в чёткий, структурированный промпт. " +
-    "Сохраняй язык исходного запроса. Не выполняй запрос и не выдавай решение задачи. " +
-    "Всегда возвращай только улучшенный промпт, даже если вход уже похож на промпт. " +
-    "Возвращай именно инструкцию для модели (повелительные формулировки, требования, правила), а не результат выполнения. " +
-    "Не добавляй объяснений, примеров, ответов или комментариев. Выводи только готовый промпт без Markdown.";
+    "You are a prompt improvement expert. Transform the user's request into a clear, structured prompt. " +
+    "CRITICAL: Always respond in the SAME language as the user's input. If the input is in English, the improved prompt MUST be in English. " +
+    "If the input is in Russian, respond in Russian. Match the input language exactly. " +
+    "Do not execute the request or provide a solution. " +
+    "Always return only the improved prompt, even if the input already looks like a prompt. " +
+    "Return instructions for the model (imperative formulations, requirements, rules), not the result of execution. " +
+    "Do not add explanations, examples, answers, or comments. Output only the ready prompt without Markdown.";
 
   const user =
-    "Сформируй улучшенный промпт. Это должен быть текст-инструкция для модели, " +
-    "а не готовый ответ на задачу.\n\n" +
-    `Исходный запрос:\n${prompt}`;
+    "Create an improved prompt. It must be an instruction for the model, " +
+    "not a ready answer to the task. Respond in the same language as the original request below.\n\n" +
+    `Original request:\n${prompt}`;
 
   const response = await fetch("https://api.deepseek.com/chat/completions", {
     method: "POST",
