@@ -4,7 +4,7 @@ const pasteBtn = document.getElementById("pasteBtn");
 const confirmBtn = document.getElementById("confirmBtn");
 const copyBtn = document.getElementById("copyBtn");
 const statusText = document.getElementById("statusText");
-const memeText = document.getElementById("memeText");
+const memeText = document.getElementById("memeText"); // may be null in redesigned layout
 const toast = document.getElementById("toast");
 const outputHint = document.getElementById("outputHint");
 const telegramBtn = document.getElementById("telegramBtn");
@@ -97,7 +97,7 @@ function setStatusIdle(message) {
   const text = message || idle.defaultStatus || "";
   statusText.textContent = text;
   statusText.classList.toggle("is-hidden", !text);
-  memeText.textContent = idle.defaultMeme || "";
+  if (memeText) memeText.textContent = idle.defaultMeme || "";
 }
 
 function startLoading() {
@@ -106,7 +106,7 @@ function startLoading() {
 
   statusText.textContent = `${statusStages[stageIndex]}.`;
   statusText.classList.remove("is-hidden");
-  memeText.textContent = memeLines[0] || "";
+  if (memeText) memeText.textContent = memeLines[0] || "";
 
   dotTimer = setInterval(() => {
     dots = dots % 3 + 1;
@@ -120,7 +120,7 @@ function startLoading() {
   let memeIndex = 0;
   memeTimer = setInterval(() => {
     memeIndex = (memeIndex + 1) % memeLines.length;
-    memeText.textContent = memeLines[memeIndex];
+    if (memeText) memeText.textContent = memeLines[memeIndex];
   }, loading.memeIntervalMs || 1600);
 }
 
